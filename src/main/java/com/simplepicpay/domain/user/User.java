@@ -1,5 +1,6 @@
 package com.simplepicpay.domain.user;
 
+import com.simplepicpay.dtos.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User {
     @Id
@@ -32,6 +34,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+    public User(UserDTO userDTO){
+        this.firstName = userDTO.firstName();
+        this.lastName = userDTO.lastName();
+        this.document = userDTO.document();
+        this.balance = userDTO.balance();
+        this.email = userDTO.email();
+        this.password = userDTO.password();
+        this.userType = userDTO.userType();
+
+    }
 
 }
 
