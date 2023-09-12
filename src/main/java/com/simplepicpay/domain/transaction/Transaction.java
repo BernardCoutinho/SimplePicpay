@@ -1,11 +1,9 @@
 package com.simplepicpay.domain.transaction;
 
 import com.simplepicpay.domain.user.User;
+import com.simplepicpay.dtos.TransactionDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity(name = "transactions")
 @Table(name = "transactions")
