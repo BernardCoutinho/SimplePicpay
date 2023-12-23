@@ -20,7 +20,6 @@ public class TransactionService {
     @Autowired
     private TransactionRepository repository;
 
-
     @Autowired
     private AthorizationService authorizeService;
 
