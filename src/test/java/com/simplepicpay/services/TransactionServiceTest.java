@@ -4,6 +4,7 @@ import com.simplepicpay.domain.user.User;
 import com.simplepicpay.domain.user.UserType;
 import com.simplepicpay.dtos.TransactionDTO;
 import com.simplepicpay.repositories.TransactionRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,19 @@ class TransactionServiceTest {
 
     @Test
     @DisplayName("Should throw Exception when transaction when isn't allowed")
-    void createTransactionFailed() {
+    void createTransactionFailed() throws Exception {
+        User sender = new User(1L, "Carlos", "Magno", "11111111100", "carlosmagno@gmail.com", "11111", new BigDecimal(10), UserType.COMMON);
+        User receiver = new User(2L, "Pedro", "Souza", "11111111101", "pedrosouza@gmail.com", "11111", new BigDecimal(10), UserType.COMMON);
 
+        when(userService.findUserById(1L)).thenReturn(sender);
+        when(userService.findUserById(2L)).thenReturn(receiver);
+
+        when(authorizeService.authorizeTransaction(any(), any())).thenReturn(false);
+        Exception thrown = Assertions.assertThrows(Exception.class, ()-> {
+            TransactionDTO request = new TransactionDTO(new BigDecimal(10), 1L, 2L);
+            transactionService.createTransaction(request);
+        });
+
+        Assertions.assertEquals("Transaction not allowed.", thrown.getMessage());
     }
 }
